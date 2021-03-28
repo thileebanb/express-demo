@@ -1,9 +1,20 @@
 const express = require("express");
 const Joi = require("joi");
 
+const helmet = require("helmet");
+const morgan = require("morgan");
+
 const app = express();
 
 app.use(express.json());
+app.use(express.static("public"));
+app.use(express.urlencoded());
+app.use(helmet());
+
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  console.log("Morgan enabled...");
+}
 
 const mois = [
   { id: 1, name: "thileeban" },
@@ -11,7 +22,7 @@ const mois = [
 ];
 
 app.get("/", (req, res) => {
-  res.send(mois);
+  res.status(200).send(mois);
 });
 
 app.get("/api/:id", (req, res) => {
