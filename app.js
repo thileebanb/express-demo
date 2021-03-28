@@ -53,6 +53,16 @@ app.put("/api:id", (req, res) => {
   res.status(200).send(moi);
 });
 
+app.delete("/api:id", (req, res) => {
+  const id = req.params.id;
+  const moi = mois.find((m) => m.id === parseInt(id));
+  if (!moi) return res.status(404).send("Record not found");
+
+  const index = mois.indexOf(id);
+  mois.splice(index, 1);
+  res.send(moi);
+});
+
 function validateMoi(moi) {
   const schema = Joi.object({ name: Joi.string().min(3).required() });
   return schema.validate(moi);
