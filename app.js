@@ -4,16 +4,19 @@ const Joi = require("joi");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
+const debug = require("debug")("app:log");
+
 const app = express();
 
 app.use(express.json());
 app.use(express.static("public"));
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 
 if (app.get("env") === "development") {
   app.use(morgan("tiny"));
-  console.log("Morgan enabled...");
+  debug("Morgan enabled");
+  // console.log("Morgan enabled...");
 }
 
 const mois = [
