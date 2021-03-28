@@ -1,9 +1,7 @@
 const express = require("express");
 const Joi = require("joi");
-
 const helmet = require("helmet");
 const morgan = require("morgan");
-
 const debug = require("debug")("app:log");
 
 const app = express();
@@ -12,6 +10,9 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
+
+app.set("view engine", "pug");
+app.set("views", "./views"); // Optional
 
 if (app.get("env") === "development") {
   app.use(morgan("tiny"));
@@ -25,7 +26,7 @@ const mois = [
 ];
 
 app.get("/", (req, res) => {
-  res.status(200).send(mois);
+  res.render("index", { title: "Express Demo", message: "Hello world" });
 });
 
 app.get("/api/:id", (req, res) => {
