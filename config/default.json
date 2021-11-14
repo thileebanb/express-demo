@@ -1,3 +1,4 @@
 {
-  "host": "mongodb:localhost:27017"
+  "host": "mongodb:localhost:27017",
+  "dbUrl": "mongodb://localhost/moi"
 }
